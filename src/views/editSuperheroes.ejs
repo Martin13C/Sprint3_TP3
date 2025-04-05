@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="/css/editSuperheroes.css">
+    <title>Editar Superhéroe</title>
+</head>
+<body>
+    <h1>Editar Superhéroe</h1>
+    <pre>
+        Superhéroe ID: <%= superheroe._id %>
+      </pre>
+      <div class="form-container">
+        <form action="/api/<%= superheroe._id %>/editar?_method=PUT" method="POST">
+            <input type="hidden" name="_method" value="PUT">
+            <p>ID: <%= superheroe._id %></p>
+            <label for="nombreSuperHeroe">Nombre del Superhéroe:</label><br>
+            <input type="text" id="nombreSuperHeroe" name="nombreSuperHeroe" value="<%= superheroe.Nombre %>" required><br><br>
+    
+            <label for="nombreReal">Nombre Real:</label><br>
+            <input type="text" id="nombreReal" name="nombreReal" value="<%= superheroe["Nombre Real"] %>" required><br><br>
+    
+            <label for="edad">Edad:</label><br>
+            <input type="number" id="edad" name="edad" value="<%= superheroe.Edad %>" required min="0"><br><br>
+    
+            <label for="planetaOrigen">Planeta de Origen:</label><br>
+            <input type="text" id="planetaOrigen" name="planetaOrigen" value="<%= superheroe["Planeta de Origen"] %>"><br><br>
+    
+            <label for="debilidad">Debilidad:</label><br>
+            <input type="text" id="debilidad" name="debilidad" value="<%= superheroe.Debilidad %>"><br><br>
+    
+            <label for="poderes">Poderes (separados por coma):</label><br>
+            <% if (Array.isArray(superheroe.Poderes)) { %>
+                <input type="text" id="poderes" name="poderes" value="<%= superheroe.Poderes.join(', ') %>" required><br><br>
+            <% } else { %>
+                <input type="text" id="poderes" name="poderes"><br><br>
+            <% } %>
+            
+            <label for="aliados">Poderes (separados por coma):</label><br>
+            <% if (Array.isArray(superheroe.Poderes)) { %>
+                <input type="text" id="aliados" name="aliados" value="<%= superheroe.Aliados.join(', ') %>" required><br><br>
+            <% } else { %>
+                <input type="text" id="aliados" name="aliados"><br><br>
+            <% } %>
+    
+            <label for="enemigos">Poderes (separados por coma):</label><br>
+            <% if (Array.isArray(superheroe.Poderes)) { %>
+                <input type="text" id="enemigos" name="enemigos" value="<%= superheroe.Enemigos.join(', ') %>" required><br><br>
+            <% } else { %>
+                <input type="text" id="enemigos" name="enemigos"><br><br>
+            <% } %>
+           
+            <label for="creador">Creador:</label><br>
+            <input type="text" id="creador" name="creador" value="<%= superheroe.Creador || '' %>"><br><br>
+    
+            <button type="submit">Guardar cambios</button>
+        </form>
+      </div>
+</body>
+</html>

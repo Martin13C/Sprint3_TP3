@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Superhéroes Dashboard</title>
+    <link rel="stylesheet" href="/css/dashboard.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Lista de Superhéroes</h1>
+
+        <div class="new-superhero-container">
+            <a href="/api/agregar" class="btn-add"><i class="fas fa-plus"></i> Nuevo Superhéroe</a>
+        </div>
+
+        <table class="styled-table">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Nombre Real</th>
+                    <th>Edad</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% superheroes.forEach(superheroe => { %>
+                    <tr>
+                        <td><%= superheroe.Nombre %></td>
+                        <td><%= superheroe["Nombre Real"] %></td>
+                        <td><%= superheroe.Edad %></td>
+                        <td>
+                            <a href="/api/<%= superheroe._id%>/editar" class="btn-edit"><i class="fas fa-edit"></i> Editar</a>
+                            <form action="/api/<%= superheroe._id %>/eliminar?_method=DELETE" method="POST" class="delete-form">
+                                <button type="submit" class="btn-delete"><i class="fas fa-trash-alt"></i> Eliminar</button>
+                            </form>
+                        </td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
