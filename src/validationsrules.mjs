@@ -25,21 +25,39 @@ export const validacionDeDatosSuperheroes = ()=> [
     .isInt({min:0})
     .withMessage('La edad no puede ser negativa'),
 
+    // body('poderes')
+    // .trim()
+    // .notEmpty()
+    // .withMessage('Los poderes son obligatorios')
+    // .custom((value) => {
+    //     const poderesArray = value.split(',').map(p => p.trim());
+    //     if (poderesArray.length === 0) {
+    //         throw new Error("Debe ingresar al menos un poder");
+    //     }
+    //     for (const poder of poderesArray) {
+    //         if (poder.length < 3 || poder.length > 60) {
+    //             throw new Error("Cada poder debe tener entre 3 y 60 caracteres");
+    //         }
+    //     }
+    //     return true;
+    // })
+    // .withMessage('Formato inválido para los poderes')
+
     body('poderes')
-    .trim()
-    .notEmpty()
-    .withMessage('Los poderes son obligatorios')
-    .custom((value) => {
-        const poderesArray = value.split(',').map(p => p.trim());
-        if (poderesArray.length === 0) {
-            throw new Error("Debe ingresar al menos un poder");
-        }
-        for (const poder of poderesArray) {
-            if (poder.length < 3 || poder.length > 60) {
-                throw new Error("Cada poder debe tener entre 3 y 60 caracteres");
-            }
-        }
-        return true;
-    })
-    .withMessage('Formato inválido para los poderes')
+  .trim()
+  .notEmpty()
+  .withMessage('Los poderes son obligatorios')
+  .custom((value) => {
+    const poderesArray = value.split(',').map(p => p.trim());
+    if (poderesArray.length === 0 || poderesArray.includes('')) {
+      throw new Error("Debe ingresar al menos un poder y no pueden estar vacíos");
+    }
+    for (const poder of poderesArray) {
+      if (poder.length < 3 || poder.length > 60) {
+        throw new Error("Cada poder debe tener entre 3 y 60 caracteres");
+      }
+    }
+    return true;
+  })
+  .withMessage('Formato inválido para los poderes')
 ]

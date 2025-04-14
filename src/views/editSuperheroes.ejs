@@ -10,14 +10,14 @@
         Superhéroe ID: <%= superheroe._id %>
       </pre>
       <div class="form-container">
-        <form action="/api/<%= superheroe._id %>/editar?_method=PUT" method="POST">
+        <form id="superhero-form" action="/api/<%= superheroe._id %>/editar?_method=PUT" method="POST">
             <input type="hidden" name="_method" value="PUT">
             <p>ID: <%= superheroe._id %></p>
             <label for="nombreSuperHeroe">Nombre del Superhéroe:</label><br>
-            <input type="text" id="nombreSuperHeroe" name="nombreSuperHeroe" value="<%= superheroe.Nombre %>" required><br><br>
+            <input type="text" id="nombreSuperHeroe" name="nombreSuperHeroe" value="<%= superheroe.Nombre %>" required minlength="3" maxlength="60"><br><br>
     
             <label for="nombreReal">Nombre Real:</label><br>
-            <input type="text" id="nombreReal" name="nombreReal" value="<%= superheroe["Nombre Real"] %>" required><br><br>
+            <input type="text" id="nombreReal" name="nombreReal" required minlength="3" maxlength="60" value="<%= superheroe["Nombre Real"] %>"  ><br><br>
     
             <label for="edad">Edad:</label><br>
             <input type="number" id="edad" name="edad" value="<%= superheroe.Edad %>" required min="0"><br><br>
@@ -35,15 +35,40 @@
                 <input type="text" id="poderes" name="poderes"><br><br>
             <% } %>
             
-            <label for="aliados">Poderes (separados por coma):</label><br>
-            <% if (Array.isArray(superheroe.Poderes)) { %>
+
+            <!-- validacion de poderes en el front-end  -->
+            <script>
+                document.getElementById('superhero-form').addEventListener('submit', function(event) {
+                  const poderesInput = document.getElementById('poderes').value;
+                  const poderes = poderesInput.split(',').map(poder => poder.trim());
+              
+                  // Validación: al menos dos poderes
+                  if (poderes.length < 2) {
+                    alert('El superhéroe debe tener al menos dos poderes.');
+                    event.preventDefault(); // Evita el envío del formulario
+                    return;
+                  }
+              
+                  // Validación: cada poder debe tener al menos 3 letras
+                  const poderesInvalidos = poderes.filter(poder => poder.length < 3);
+                  if (poderesInvalidos.length > 0) {
+                    alert('Cada poder debe tener al menos 3 letras.');
+                    event.preventDefault(); // Evita el envío del formulario
+                    return;
+                  }
+                });
+              </script>
+
+
+            <label for="aliados">Aliados (separados por coma):</label><br>
+            <% if (Array.isArray(superheroe.Aliados)) { %>
                 <input type="text" id="aliados" name="aliados" value="<%= superheroe.Aliados.join(', ') %>" required><br><br>
             <% } else { %>
                 <input type="text" id="aliados" name="aliados"><br><br>
             <% } %>
     
-            <label for="enemigos">Poderes (separados por coma):</label><br>
-            <% if (Array.isArray(superheroe.Poderes)) { %>
+            <label for="enemigos">Enemigos (separados por coma):</label><br>
+            <% if (Array.isArray(superheroe.Enemigos)) { %>
                 <input type="text" id="enemigos" name="enemigos" value="<%= superheroe.Enemigos.join(', ') %>" required><br><br>
             <% } else { %>
                 <input type="text" id="enemigos" name="enemigos"><br><br>

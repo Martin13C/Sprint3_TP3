@@ -15,12 +15,12 @@
         </div>
     <% } %>
     <div class="form-container">
-        <form action="/api/agregar" method="POST">
+        <form id="superhero-form" action="/api/agregar" method="POST">
             <label for="nombreSuperHeroe">Nombre del Superhéroe:</label><br>
-            <input type="text" id="nombreSuperHeroe" name="nombreSuperHeroe" required><br><br>
+            <input type="text" id="nombreSuperHeroe" name="nombreSuperHeroe" required minlength="3" maxlength="60"><br><br>
         
             <label for="nombreReal">Nombre Real:</label><br>
-            <input type="text" id="nombreReal" name="nombreReal" required><br><br>
+            <input type="text" id="nombreReal" name="nombreReal" required minlength="3" maxlength="60"><br><br>
         
             <label for="edad">Edad:</label><br>
             <input type="number" id="edad" name="edad" required min="0"><br><br>
@@ -30,6 +30,30 @@
         
             <label for="poderes">Poderes (separados por coma):</label><br>
             <input type="text" id="poderes" name="poderes" required><br><br>
+
+            <!-- validacion en el fron-end  -->
+            <script>
+                document.getElementById('superhero-form').addEventListener('submit', function(event) {
+                  const poderesInput = document.getElementById('poderes').value;
+                  const poderes = poderesInput.split(',').map(poder => poder.trim());
+              
+                  // Validación: al menos dos poderes
+                  if (poderes.length < 2) {
+                    alert('El superhéroe debe tener al menos dos poderes.');
+                    event.preventDefault(); // Evita el envío del formulario
+                    return;
+                  }
+              
+                  // Validación: cada poder debe tener al menos 3 letras
+                  const poderesInvalidos = poderes.filter(poder => poder.length < 3);
+                  if (poderesInvalidos.length > 0) {
+                    alert('Cada poder debe tener al menos 3 letras.');
+                    event.preventDefault(); // Evita el envío del formulario
+                    return;
+                  }
+                });
+              </script>
+
         
             <label for="aliados">Aliados (separados por coma):</label><br>
             <input type="text" id="aliados" name="aliados"><br><br>

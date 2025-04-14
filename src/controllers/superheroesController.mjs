@@ -291,7 +291,7 @@ export async function agregarSuperheroeEJSController(req, res) {
       poderes: poderesArray,
       aliados: aliadosArray,
       enemigos: enemigosArray,
-      creador,
+      creador
     });
     const superheroePlain = nuevoSuperheroe.toObject(); // Convertir a objeto para evitar problemas con el tipo de datos que vuelven de la base de datos
     const superheroeFormateado = renderizarSuperheroe(superheroePlain);
